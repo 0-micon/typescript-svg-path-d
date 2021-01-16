@@ -8,11 +8,11 @@ export function createHeartElement(
   radius: number
 ) {
   const pathH = createHeart(centerX, centerY, radius);
-  const pathS = createStar(centerX, centerY, 32, 0.5 * radius, radius);
+  const pathS = createStar(centerX, centerY, 113, 0.1 * radius, radius);
   const morph = makeInterpolator(pathH, pathS);
 
   const src = morph(0).join("");
-  const dst = morph(0.2).join("");
+  const dst = morph(0.25).join("");
 
   const element = document.createElement("div");
 
