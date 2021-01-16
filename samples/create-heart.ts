@@ -18,7 +18,7 @@ export function createHeartElement(
 
   element.innerHTML = `
 <svg viewBox="${pathToViewBox(pathH)}">
-  <path fill="red" d="${src}" >
+  <path fill="tomato" d="${src}" >
     <animate id="animate1" begin="1s;animate2.end + 1s"
       repeatCount="1" fill="freeze" attributeName="d"
       dur="0.5s" values="${src}; ${dst}" />
