@@ -13,7 +13,7 @@ export function createCircle(
       ry: radius,
       angle: 0,
       largeArcFlag: false,
-      sweepFlag: false,
+      sweepFlag: true,
       x: centerX,
       y: centerY + radius
     },
@@ -23,7 +23,7 @@ export function createCircle(
       ry: radius,
       angle: 0,
       largeArcFlag: false,
-      sweepFlag: false,
+      sweepFlag: true,
       x: centerX,
       y: centerY - radius
     },
@@ -37,17 +37,7 @@ export function createHeart(
   radius: number
 ): SPD.PathNode[] {
   return SPD.makePath([
-    { name: "M", x: centerX - 2 * radius, y: centerY - radius },
-    {
-      name: "A",
-      rx: radius,
-      ry: radius,
-      angle: 0,
-      largeArcFlag: false,
-      sweepFlag: true,
-      x: centerX,
-      y: centerY - radius
-    },
+    { name: "M", x: centerX, y: centerY - radius },   
     {
       name: "A",
       rx: radius,
@@ -70,6 +60,16 @@ export function createHeart(
       x1: centerX - 2 * radius,
       y1: centerY + radius / 2,
       x: centerX - 2 * radius,
+      y: centerY - radius
+    },
+    {
+      name: "A",
+      rx: radius,
+      ry: radius,
+      angle: 0,
+      largeArcFlag: false,
+      sweepFlag: true,
+      x: centerX,
       y: centerY - radius
     },
     { name: "Z" }

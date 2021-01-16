@@ -8,17 +8,18 @@ export function rectToViewBox(
   left: number,
   top: number,
   right: number,
-  bottom: number
+  bottom: number,
+  pad = 1
 ): string {
-  const x = Math.floor(left) - 1;
-  const y = Math.floor(top) - 1;
-  const w = Math.ceil(right) + 1 - x;
-  const h = Math.ceil(bottom) + 1 - y;
+  const x = Math.floor(left) - pad;
+  const y = Math.floor(top) - pad;
+  const w = Math.ceil(right) + pad - x;
+  const h = Math.ceil(bottom) + pad - y;
 
   return `${x} ${y} ${w} ${h}`;
 }
 
-export function pathToViewBox(path: SPD.PathNode[]): string {
+export function pathToViewBox(path: SPD.PathNode[], pad = 1): string {
   const rect = SPD.getBoundingRect(path);
-  return rectToViewBox(rect.left, rect.top, rect.right, rect.bottom);
+  return rectToViewBox(rect.left, rect.top, rect.right, rect.bottom, pad);
 }
