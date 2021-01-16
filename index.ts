@@ -4,7 +4,7 @@ import { createCircleElement } from './samples/create-circle';
 
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<h1>TypeScript Examples</h1>`;
+appDiv.innerHTML = `<h1>SVG Path Examples</h1>`;
 
 // Examples:
 const circleElement = createCircleElement(512, 512, 500);
