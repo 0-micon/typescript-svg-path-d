@@ -14,8 +14,7 @@ export function createConvexPolygonElement(
 
   element.innerHTML = `
 <svg viewBox="${pathToViewBox(path)}">
-  <path fill="yellow" d="${data}">
-  </path>
+  <path fill="yellow" d="${data}" />
 </svg>`;
 
   return element;
