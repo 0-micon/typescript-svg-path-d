@@ -37,7 +37,7 @@ export function createCircleElement(
   radius: number
 ) {
   const path = createCircle(centerX, centerY, radius);
-  const data = path.map(item => SPD.asString(item, 2));
+  const data = path.map(item => SPD.asString(item, 2)).join("");
 
   const x = Math.floor(centerX - radius) - 1;
   const y = Math.floor(centerY - radius) - 1;
