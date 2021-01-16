@@ -1,31 +1,6 @@
 import * as SPD from "svg-path-d";
-
-export function createConvexPolygon(
-  centerX: number,
-  centerY: number,
-  pointCount: number,
-  radius: number
-): SPD.PathNode[] {
-  const arr: SPD.DrawTo[] = [
-    {
-      name: "M",
-      x: centerX,
-      y: centerY - radius
-    }
-  ];
-  for (let i = 0; i < pointCount; i++) {
-    const angle = (2 * (i + 1) * Math.PI) / pointCount;
-    arr.push({
-      name: "L",
-      x: centerX + radius * Math.sin(angle),
-      y: centerY - radius * Math.cos(angle)
-    });
-  }
-  arr.push({
-    name: "Z"
-  });
-  return SPD.makePath(arr);
-}
+import { createConvexPolygon } from "./create";
+import { pathToString, rectToViewBox } from "./format";
 
 export function createConvexPolygonElement(
   centerX: number,
@@ -34,18 +9,14 @@ export function createConvexPolygonElement(
   radius: number
 ) {
   const path = createConvexPolygon(centerX, centerY, pointCount, radius);
-  const data = path.map(item => SPD.asString(item, 2)).join("");
+  const data = pathToString(path);
   const rect = SPD.getBoundingRect(path);
-
-  const x = Math.floor(rect.left) - 1;
-  const y = Math.floor(rect.top) - 1;
-  const w = Math.ceil(rect.right) + 1 - x;
-  const h = Math.ceil(rect.right) + 1 - y;
+  const view = rectToViewBox(rect.left, rect.top, rect.right, rect.bottom);
 
   const element = document.createElement("div");
 
   element.innerHTML = `
-<svg viewBox="${x} ${y} ${w} ${h}">
+<svg viewBox="${view}">
   <path fill="yellow" d="${data}">
   </path>
 </svg>`;
