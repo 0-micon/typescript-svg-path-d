@@ -17,3 +17,8 @@ export function rectToViewBox(
 
   return `${x} ${y} ${w} ${h}`;
 }
+
+export function pathToViewBox(path: SPD.PathNode[]): string {
+  const rect = SPD.getBoundingRect(path);
+  return rectToViewBox(rect.left, rect.top, rect.right, rect.bottom);
+}

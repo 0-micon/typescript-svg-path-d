@@ -1,5 +1,5 @@
 import { createCircle } from "./create";
-import { pathToString, rectToViewBox } from "./format";
+import { pathToString, pathToViewBox } from "./format";
 
 export function createCircleElement(
   centerX: number,
@@ -8,12 +8,7 @@ export function createCircleElement(
 ) {
   const path = createCircle(centerX, centerY, radius);
   const data = pathToString(path);
-  const view = rectToViewBox(
-    centerX - radius,
-    centerY - radius,
-    centerX + radius,
-    centerY + radius
-  );
+  const view = pathToViewBox(path);
 
   const element = document.createElement("div");
 

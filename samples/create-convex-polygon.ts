@@ -1,6 +1,5 @@
-import * as SPD from "svg-path-d";
 import { createConvexPolygon } from "./create";
-import { pathToString, rectToViewBox } from "./format";
+import { pathToString, pathToViewBox } from "./format";
 
 export function createConvexPolygonElement(
   centerX: number,
@@ -10,13 +9,11 @@ export function createConvexPolygonElement(
 ) {
   const path = createConvexPolygon(centerX, centerY, pointCount, radius);
   const data = pathToString(path);
-  const rect = SPD.getBoundingRect(path);
-  const view = rectToViewBox(rect.left, rect.top, rect.right, rect.bottom);
 
   const element = document.createElement("div");
 
   element.innerHTML = `
-<svg viewBox="${view}">
+<svg viewBox="${pathToViewBox(path)}">
   <path fill="yellow" d="${data}">
   </path>
 </svg>`;
