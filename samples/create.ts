@@ -31,6 +31,51 @@ export function createCircle(
   ]);
 }
 
+export function createHeart(
+  centerX: number,
+  centerY: number,
+  radius: number
+): SPD.PathNode[] {
+  return SPD.makePath([
+    { name: "M", x: centerX - 2 * radius, y: centerY - radius },
+    {
+      name: "A",
+      rx: radius,
+      ry: radius,
+      angle: 0,
+      largeArcFlag: false,
+      sweepFlag: true,
+      x: centerX,
+      y: centerY - radius
+    },
+    {
+      name: "A",
+      rx: radius,
+      ry: radius,
+      angle: 0,
+      largeArcFlag: false,
+      sweepFlag: true,
+      x: centerX + 2 * radius,
+      y: centerY - radius
+    },
+    {
+      name: "Q",
+      x1: centerX + 2 * radius,
+      y1: centerY + radius / 2,
+      x: centerX,
+      y: centerY + 2 * radius
+    },
+    {
+      name: "Q",
+      x1: centerX - 2 * radius,
+      y1: centerY + radius / 2,
+      x: centerX - 2 * radius,
+      y: centerY - radius
+    },
+    { name: "Z" }
+  ]);
+}
+
 export function createConvexPolygon(
   centerX: number,
   centerY: number,
