@@ -151,6 +151,47 @@ export function createRing(
   return SPD.makePath(ring.concat(hole));
 }
 
+export function createSun(
+  centerX: number,
+  centerY: number,
+  pointCount: number,
+  rMin: number,
+  rMax: number,
+  shiftAngle: number
+): SPD.PathNode[] {
+  const rMid = (rMax + rMin) / 2;
+  const arr: SPD.DrawTo[] = [
+    {
+      name: "M",
+      x: centerX,
+      y: centerY - rMax
+    }
+  ];
+  for (let i = 0; i < pointCount; i++) {
+    const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
+    arr.push({
+      name: "Q",
+      x1: centerX + rMid * Math.sin(angle1 + shiftAngle),
+      y1: centerY - rMid * Math.cos(angle1 + shiftAngle),
+      x: centerX + rMin * Math.sin(angle1),
+      y: centerY - rMin * Math.cos(angle1)
+    });
+
+    const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
+    arr.push({
+      name: "Q",
+      x1: centerX + rMid * Math.sin(angle2 + shiftAngle),
+      y1: centerY - rMid * Math.cos(angle2 + shiftAngle),
+      x: centerX + rMax * Math.sin(angle2),
+      y: centerY - rMax * Math.cos(angle2)
+    });
+  }
+  arr.push({
+    name: "Z"
+  });
+  return SPD.makePath(arr);
+}
+
 export function createBatman(
   centerX: number,
   centerY: number,

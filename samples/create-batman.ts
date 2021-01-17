@@ -1,6 +1,11 @@
-import { makeInterpolator } from "svg-path-d";
-import { createBatman, createConvexPolygon } from "./create";
-import { pathToViewBox } from "./format";
+import {
+  createReveresed,
+  getBoundingRect,
+  makeInterpolator,
+  makePath
+} from "svg-path-d";
+import { createBatman, createCircle, createSun } from "./create";
+import { rectToViewBox } from "./format";
 
 export function createBatmanElement(
   centerX: number,
@@ -8,7 +13,16 @@ export function createBatmanElement(
   radius: number
 ) {
   const pathB = createBatman(centerX, centerY, radius);
-  const pathS = createConvexPolygon(centerX, centerY, 8, radius);
+  const pathS = makePath(
+    createSun(
+      centerX,
+      centerY,
+      12,
+      radius * 0.65,
+      radius,
+      -Math.PI / 12
+    ).concat(createReveresed(createCircle(centerX, centerY, radius * 0.5)))
+  );
   const morph = makeInterpolator(pathB, pathS, {
     groupClosePoints: [{ x: centerX, y: centerY }, { x: centerX, y: centerY }]
   });
@@ -18,8 +32,10 @@ export function createBatmanElement(
 
   const element = document.createElement("div");
 
+  const rc = getBoundingRect(pathS, getBoundingRect(pathB));
+
   element.innerHTML = `
-<svg viewBox="${pathToViewBox(pathS)}">
+<svg viewBox="${rectToViewBox(rc.left, rc.top, rc.right, rc.bottom)}">
   <path fill="black" d="${src}" >
     <animate id="animate1" begin="1s;animate2.end + 1s"
       repeatCount="1" fill="freeze" attributeName="d"
