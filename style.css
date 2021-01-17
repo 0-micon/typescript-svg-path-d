@@ -9,6 +9,7 @@ h2 {
 }
 
 #app > div {
+  flex: auto;
   min-width: 48px;
   max-width: 240px;
 }
