@@ -37,7 +37,7 @@ export function createHeart(
   radius: number
 ): SPD.PathNode[] {
   return SPD.makePath([
-    { name: "M", x: centerX, y: centerY - radius },   
+    { name: "M", x: centerX, y: centerY - radius },
     {
       name: "A",
       rx: radius,
@@ -136,4 +136,16 @@ export function createStar(
     name: "Z"
   });
   return SPD.makePath(arr);
+}
+
+export function createRing(
+  centerX: number,
+  centerY: number,
+  rMin: number,
+  rMax: number
+): SPD.PathNode[] {
+  const ring = createCircle(centerX, centerY, rMax);
+  // To cut a hole we should reverse the hole path.
+  const hole = SPD.createReveresed(createCircle(centerX, centerY, rMin));
+  return SPD.makePath(ring.concat(hole));
 }
