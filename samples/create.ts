@@ -88,36 +88,26 @@ export function createSun(
   shiftAngle: number
 ): SPD.PathNode[] {
   const rMid = (rMax + rMin) / 2;
-  const arr: SPD.DrawTo[] = [
-    {
-      name: "M",
-      x: centerX,
-      y: centerY - rMax
-    }
-  ];
+
+  const maker = new SPD.PathBuilder().M(centerX, centerY - rMax);
   for (let i = 0; i < pointCount; i++) {
     const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-    arr.push({
-      name: "Q",
-      x1: centerX + rMid * Math.sin(angle1 + shiftAngle),
-      y1: centerY - rMid * Math.cos(angle1 + shiftAngle),
-      x: centerX + rMin * Math.sin(angle1),
-      y: centerY - rMin * Math.cos(angle1)
-    });
+    maker.Q(
+      centerX + rMid * Math.sin(angle1 + shiftAngle),
+      centerY - rMid * Math.cos(angle1 + shiftAngle),
+      centerX + rMin * Math.sin(angle1),
+      centerY - rMin * Math.cos(angle1)
+    );
 
     const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
-    arr.push({
-      name: "Q",
-      x1: centerX + rMid * Math.sin(angle2 + shiftAngle),
-      y1: centerY - rMid * Math.cos(angle2 + shiftAngle),
-      x: centerX + rMax * Math.sin(angle2),
-      y: centerY - rMax * Math.cos(angle2)
-    });
+    maker.Q(
+      centerX + rMid * Math.sin(angle2 + shiftAngle),
+      centerY - rMid * Math.cos(angle2 + shiftAngle),
+      centerX + rMax * Math.sin(angle2),
+      centerY - rMax * Math.cos(angle2)
+    );
   }
-  arr.push({
-    name: "Z"
-  });
-  return SPD.makePath(arr);
+  return maker.z().path;
 }
 
 export function createBatman(
