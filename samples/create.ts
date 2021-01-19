@@ -6,30 +6,11 @@ export function createCircle(
   centerY: number,
   radius: number
 ): SPD.PathNode[] {
-  return SPD.makePath([
-    { name: "M", x: centerX, y: centerY - radius },
-    {
-      name: "A",
-      rx: radius,
-      ry: radius,
-      angle: 0,
-      largeArcFlag: false,
-      sweepFlag: true,
-      x: centerX,
-      y: centerY + radius
-    },
-    {
-      name: "A",
-      rx: radius,
-      ry: radius,
-      angle: 0,
-      largeArcFlag: false,
-      sweepFlag: true,
-      x: centerX,
-      y: centerY - radius
-    },
-    { name: "Z" }
-  ]);
+  return new SPD.PathBuilder()
+    .M(centerX, centerY - radius)
+    .a(radius, radius, 0, 0, 1, 0, 2 * radius)
+    .a(radius, radius, 0, 0, 1, 0, -2 * radius)
+    .z().path;
 }
 
 export function createHeart(
