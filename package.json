@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "svg-path-d": "^0.0.9"
+    "svg-path-d": "^0.1.0"
   }
 }

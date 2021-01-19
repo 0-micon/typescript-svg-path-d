@@ -147,7 +147,7 @@ export function createRing(
 ): SPD.PathNode[] {
   const ring = createCircle(centerX, centerY, rMax);
   // To cut a hole we should reverse the hole path.
-  const hole = SPD.createReveresed(createCircle(centerX, centerY, rMin));
+  const hole = SPD.createReversed(createCircle(centerX, centerY, rMin));
   return SPD.makePath(ring.concat(hole));
 }
 

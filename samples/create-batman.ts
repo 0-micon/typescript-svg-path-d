@@ -1,5 +1,5 @@
 import {
-  createReveresed,
+  createReversed,
   getBoundingRect,
   makeInterpolator,
   makePath
@@ -21,7 +21,7 @@ export function createBatmanElement(
       radius * 0.65,
       radius,
       -Math.PI / 12
-    ).concat(createReveresed(createCircle(centerX, centerY, radius * 0.5)))
+    ).concat(createReversed(createCircle(centerX, centerY, radius * 0.5)))
   );
   const morph = makeInterpolator(pathB, pathS, {
     groupClosePoints: [{ x: centerX, y: centerY }, { x: centerX, y: centerY }]
