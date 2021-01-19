@@ -32,25 +32,15 @@ export function createConvexPolygon(
   pointCount: number,
   radius: number
 ): SPD.PathNode[] {
-  const arr: SPD.DrawTo[] = [
-    {
-      name: "M",
-      x: centerX,
-      y: centerY - radius
-    }
-  ];
+  const maker = new SPD.PathBuilder().M(centerX, centerY - radius);
   for (let i = 0; i < pointCount; i++) {
     const angle = (2 * (i + 1) * Math.PI) / pointCount;
-    arr.push({
-      name: "L",
-      x: centerX + radius * Math.sin(angle),
-      y: centerY - radius * Math.cos(angle)
-    });
+    maker.L(
+      centerX + radius * Math.sin(angle),
+      centerY - radius * Math.cos(angle)
+    );
   }
-  arr.push({
-    name: "Z"
-  });
-  return SPD.makePath(arr);
+  return maker.z().path;
 }
 
 export function createStar(
