@@ -1,11 +1,12 @@
 import {
+  align,
   createReversed,
   getBoundingRect,
-  makeInterpolator,
+  getGroups,
   makePath
 } from "svg-path-d";
 import { createBatman, createCircle, createSun } from "./create";
-import { rectToViewBox } from "./format";
+import { pathToString, rectToViewBox } from "./format";
 
 export function createBatmanElement(
   centerX: number,
@@ -23,12 +24,26 @@ export function createBatmanElement(
       -Math.PI / 12
     ).concat(createReversed(createCircle(centerX, centerY, radius * 0.5)))
   );
-  const morph = makeInterpolator(pathB, pathS, {
-    groupClosePoints: [{ x: centerX, y: centerY }, { x: centerX, y: centerY }]
-  });
 
-  const src = morph(0).join("");
-  const dst = morph(1).join("");
+  const [src, dst] = align(pathB, pathS, {
+    groupClosePoints: [{ x: centerX, y: centerY }]
+  })
+    .map(path => getGroups(path))
+    .map(groups => groups.map(group => pathToString(group)));
+
+  const colors = ["black", "yellow"];
+  let buf = "";
+  for (let i = 0; i < src.length; i++) {
+    buf += `
+  <path fill="${colors[i % colors.length]}" d="${src[i]}" >
+    <animate id="animate1" begin="1s;animate2.end + 1s"
+      repeatCount="1" fill="freeze" attributeName="d"
+      dur="0.5s" values="${src[i]}; ${dst[i]}" />
+    <animate id="animate2" begin="animate1.end + 0.5s"
+      repeatCount="1" fill="freeze" attributeName="d"
+      dur="1s" values="${dst[i]}; ${src[i]}" />
+  </path>`;
+  }
 
   const element = document.createElement("div");
 
@@ -36,14 +51,7 @@ export function createBatmanElement(
 
   element.innerHTML = `
 <svg viewBox="${rectToViewBox(rc.left, rc.top, rc.right, rc.bottom)}">
-  <path fill="black" d="${src}" >
-    <animate id="animate1" begin="1s;animate2.end + 1s"
-      repeatCount="1" fill="freeze" attributeName="d"
-      dur="0.5s" values="${src}; ${dst}" />
-    <animate id="animate2" begin="animate1.end + 0.5s"
-      repeatCount="1" fill="freeze" attributeName="d"
-      dur="1s" values="${dst}; ${src}" />
-  </path>
+${buf}
 </svg>`;
 
   return element;
