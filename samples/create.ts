@@ -1,5 +1,4 @@
 import * as SPD from "svg-path-d";
-import { createTransformed } from "svg-path-d/dist/transform";
 
 export function createCircle(
   centerX: number,
@@ -18,44 +17,13 @@ export function createHeart(
   centerY: number,
   radius: number
 ): SPD.PathNode[] {
-  return SPD.makePath([
-    { name: "M", x: centerX, y: centerY - radius },
-    {
-      name: "A",
-      rx: radius,
-      ry: radius,
-      angle: 0,
-      largeArcFlag: false,
-      sweepFlag: true,
-      x: centerX + 2 * radius,
-      y: centerY - radius
-    },
-    {
-      name: "Q",
-      x1: centerX + 2 * radius,
-      y1: centerY + radius / 2,
-      x: centerX,
-      y: centerY + 2 * radius
-    },
-    {
-      name: "Q",
-      x1: centerX - 2 * radius,
-      y1: centerY + radius / 2,
-      x: centerX - 2 * radius,
-      y: centerY - radius
-    },
-    {
-      name: "A",
-      rx: radius,
-      ry: radius,
-      angle: 0,
-      largeArcFlag: false,
-      sweepFlag: true,
-      x: centerX,
-      y: centerY - radius
-    },
-    { name: "Z" }
-  ]);
+  return new SPD.PathBuilder()
+    .M(centerX, centerY - radius)
+    .a(radius, radius, 0, 0, 1, 2 * radius, 0)
+    .q(0, (3 * radius) / 2, -2 * radius, 3 * radius)
+    .q(-2 * radius, (-3 * radius) / 2, -2 * radius, -3 * radius)
+    .a(radius, radius, 0, 0, 1, 2 * radius, 0)
+    .z().path;
 }
 
 export function createConvexPolygon(
@@ -187,11 +155,11 @@ export function createBatman(
   let path = SPD.fromString(logo);
   if (radius && radius !== r0) {
     const ms = SPD.utils.matrix.createScale(radius / r0, radius / r0);
-    path = createTransformed(path, ms);
+    path = SPD.createTransformed(path, ms);
   }
 
   // Add an oval.
-  let ring = createTransformed(
+  let ring = SPD.createTransformed(
     createRing(0, 0, radius * 0.925, radius),
     SPD.utils.matrix.createScale(1, 0.6125)
   );
@@ -199,7 +167,7 @@ export function createBatman(
 
   if (centerX || centerY) {
     const mt = SPD.utils.matrix.createTranslate(centerX, centerY);
-    path = createTransformed(path, mt);
+    path = SPD.createTransformed(path, mt);
   }
   return path;
 }
