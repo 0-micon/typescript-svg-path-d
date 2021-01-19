@@ -50,32 +50,21 @@ export function createStar(
   rMin: number,
   rMax: number
 ): SPD.PathNode[] {
-  const arr: SPD.DrawTo[] = [
-    {
-      name: "M",
-      x: centerX,
-      y: centerY - rMax
-    }
-  ];
+  const maker = new SPD.PathBuilder().M(centerX, centerY - rMax);
   for (let i = 0; i < pointCount; i++) {
     const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-    arr.push({
-      name: "L",
-      x: centerX + rMin * Math.sin(angle1),
-      y: centerY - rMin * Math.cos(angle1)
-    });
+    maker.L(
+      centerX + rMin * Math.sin(angle1),
+      centerY - rMin * Math.cos(angle1)
+    );
 
     const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
-    arr.push({
-      name: "L",
-      x: centerX + rMax * Math.sin(angle2),
-      y: centerY - rMax * Math.cos(angle2)
-    });
+    maker.L(
+      centerX + rMax * Math.sin(angle2),
+      centerY - rMax * Math.cos(angle2)
+    );
   }
-  arr.push({
-    name: "Z"
-  });
-  return SPD.makePath(arr);
+  return maker.z().path;
 }
 
 export function createRing(
