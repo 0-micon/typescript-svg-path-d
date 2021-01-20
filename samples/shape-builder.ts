@@ -68,7 +68,7 @@ export class ShapeBuilder extends PathBuilder {
   }
 
   sun(pointCount = 3, radius1 = 0.5, radius2 = 1, shiftAngle = 0): this {
-    const middle = (radius1 + radius2) / 2;
+    const radiusM = (radius1 + radius2) / 2;
     const cx = this.lastX;
     const cy = this.lastY + radius2;
 
@@ -78,13 +78,13 @@ export class ShapeBuilder extends PathBuilder {
 
       this
         .Q(
-          cx + middle * Math.sin(angle1 + shiftAngle),
-          cy - middle * Math.cos(angle1 + shiftAngle),
+          cx + radiusM * Math.sin(angle1 + shiftAngle),
+          cy - radiusM * Math.cos(angle1 + shiftAngle),
           cx + radius1 * Math.sin(angle1),
           cy - radius1 * Math.cos(angle1))
         .Q(
-          cx + middle * Math.sin(angle2 + shiftAngle),
-          cy - middle * Math.cos(angle2 + shiftAngle),
+          cx + radiusM * Math.sin(angle2 + shiftAngle),
+          cy - radiusM * Math.cos(angle2 + shiftAngle),
           cx + radius2 * Math.sin(angle2),
           cy - radius2 * Math.cos(angle2));
     }
