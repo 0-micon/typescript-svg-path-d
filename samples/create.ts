@@ -8,7 +8,7 @@ export function createCircle(
 ): SPD.PathNode[] {
   return new ShapeBuilder()
     .M(centerX, centerY - radius)
-    .addCircle(radius)
+    .circle(radius)
     .z().path;
 }
 
@@ -32,15 +32,10 @@ export function createConvexPolygon(
   pointCount: number,
   radius: number
 ): SPD.PathNode[] {
-  const maker = new SPD.PathBuilder().M(centerX, centerY - radius);
-  for (let i = 0; i < pointCount; i++) {
-    const angle = (2 * (i + 1) * Math.PI) / pointCount;
-    maker.L(
-      centerX + radius * Math.sin(angle),
-      centerY - radius * Math.cos(angle)
-    );
-  }
-  return maker.z().path;
+  return new ShapeBuilder()
+    .M(centerX, centerY - radius)
+    .convexPolygon(pointCount, radius)
+    .z().path;
 }
 
 export function createStar(
@@ -75,7 +70,7 @@ export function createRing(
 ): SPD.PathNode[] {
   return new ShapeBuilder()
     .M(centerX, centerY - rMax)
-    .addRing(rMin, rMax)
+    .ring(rMin, rMax)
     .z().path;
 }
 
