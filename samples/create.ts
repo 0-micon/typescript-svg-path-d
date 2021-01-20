@@ -82,27 +82,10 @@ export function createSun(
   rMax: number,
   shiftAngle: number
 ): SPD.PathNode[] {
-  const rMid = (rMax + rMin) / 2;
-
-  const maker = new SPD.PathBuilder().M(centerX, centerY - rMax);
-  for (let i = 0; i < pointCount; i++) {
-    const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-    maker.Q(
-      centerX + rMid * Math.sin(angle1 + shiftAngle),
-      centerY - rMid * Math.cos(angle1 + shiftAngle),
-      centerX + rMin * Math.sin(angle1),
-      centerY - rMin * Math.cos(angle1)
-    );
-
-    const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
-    maker.Q(
-      centerX + rMid * Math.sin(angle2 + shiftAngle),
-      centerY - rMid * Math.cos(angle2 + shiftAngle),
-      centerX + rMax * Math.sin(angle2),
-      centerY - rMax * Math.cos(angle2)
-    );
-  }
-  return maker.z().path;
+  return new ShapeBuilder()
+    .M(centerX, centerY - rMax)
+    .sun(pointCount, rMin, rMax, shiftAngle)
+    .z().path;
 }
 
 export function createBatman(
