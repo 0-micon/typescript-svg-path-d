@@ -20,11 +20,11 @@ export class ShapeBuilder extends PathBuilder {
       .a(radius, radius, 0, 0, sweep, 0, -2 * radius);
   }
 
-  convexPolygon(pointCount = 3, radius = 1): this {
+  polygon(pointCount = 3, radius = 1, deltaAngle = Math.PI): this {
     const cx = this.lastX;
     const cy = this.lastY + radius;
     for (let i = 0; i < pointCount; i++) {
-      const angle = (2 * (i + 1) * Math.PI) / pointCount;
+      const angle = (2 * (i + 1) * deltaAngle) / pointCount;
       this.L(
         cx + radius * Math.sin(angle),
         cy - radius * Math.cos(angle)

@@ -31,7 +31,10 @@ export function createConvexPolygon(
 ): SPD.PathNode[] {
   return new ShapeBuilder()
     .M(centerX, centerY - radius)
-    .convexPolygon(pointCount, radius)
+    .polygon(pointCount, radius)
+    .z()
+    .m(0, radius / 5)
+    .polygon(pointCount, 4 * radius / 5, -Math.PI)
     .z().path;
 }
 
