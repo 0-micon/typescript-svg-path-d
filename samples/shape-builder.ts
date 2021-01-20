@@ -50,6 +50,23 @@ export class ShapeBuilder extends PathBuilder {
       .circle(radius1, !anticlockwise);
   }
 
+  star(pointCount = 3, radius1 = 0.5, radius2 = 1): this {
+    const cx = this.lastX;
+    const cy = this.lastY + radius2;
+    for (let i = 0; i < pointCount; i++) {
+      const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
+      const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
+      this
+        .L(
+          cx + radius1 * Math.sin(angle1),
+          cy - radius1 * Math.cos(angle1))
+        .L(
+          cx + radius2 * Math.sin(angle2),
+          cy - radius2 * Math.cos(angle2));
+    }
+    return this;
+  }
+
   sun(pointCount = 3, radius1 = 0.5, radius2 = 1, shiftAngle = 0): this {
     const middle = (radius1 + radius2) / 2;
     const cx = this.lastX;

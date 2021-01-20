@@ -42,21 +42,10 @@ export function createStar(
   rMin: number,
   rMax: number
 ): SPD.PathNode[] {
-  const maker = new SPD.PathBuilder().M(centerX, centerY - rMax);
-  for (let i = 0; i < pointCount; i++) {
-    const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-    maker.L(
-      centerX + rMin * Math.sin(angle1),
-      centerY - rMin * Math.cos(angle1)
-    );
-
-    const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
-    maker.L(
-      centerX + rMax * Math.sin(angle2),
-      centerY - rMax * Math.cos(angle2)
-    );
-  }
-  return maker.z().path;
+  return new ShapeBuilder()
+    .M(centerX, centerY - rMax)
+    .star(pointCount, rMin, rMax)
+    .z().path;
 }
 
 export function createRing(
