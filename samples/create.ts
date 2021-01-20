@@ -1,14 +1,14 @@
 import * as SPD from "svg-path-d";
+import { ShapeBuilder } from "./shape-builder";
 
 export function createCircle(
   centerX: number,
   centerY: number,
   radius: number
 ): SPD.PathNode[] {
-  return new SPD.PathBuilder()
+  return new ShapeBuilder()
     .M(centerX, centerY - radius)
-    .a(radius, radius, 0, 0, 1, 0, 2 * radius)
-    .a(radius, radius, 0, 0, 1, 0, -2 * radius)
+    .addCircle(radius)
     .z().path;
 }
 
