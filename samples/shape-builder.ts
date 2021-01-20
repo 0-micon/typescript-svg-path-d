@@ -33,6 +33,15 @@ export class ShapeBuilder extends PathBuilder {
     return this;
   }
 
+  heart(radius = 1): this {
+    const r = radius / 2;
+    return this
+      .a(r, r, 0, 0, 1, 2 * r, 0)
+      .q(0, 3 * r / 2, -2 * r, 3 * r)
+      .q(-2 * r, -3 * r / 2, -2 * r, -3 * r)
+      .a(r, r, 0, 0, 1, 2 * r, 0);
+  }
+
   ring(radius1 = 0.5, radius2 = 1, anticlockwise?: boolean): this {
     return this
       .circle(radius2, anticlockwise)

@@ -17,12 +17,9 @@ export function createHeart(
   centerY: number,
   radius: number
 ): SPD.PathNode[] {
-  return new SPD.PathBuilder()
-    .M(centerX, centerY - radius)
-    .a(radius, radius, 0, 0, 1, 2 * radius, 0)
-    .q(0, (3 * radius) / 2, -2 * radius, 3 * radius)
-    .q(-2 * radius, (-3 * radius) / 2, -2 * radius, -3 * radius)
-    .a(radius, radius, 0, 0, 1, 2 * radius, 0)
+  return new ShapeBuilder()
+    .M(centerX, centerY)
+    .heart(radius)
     .z().path;
 }
 
