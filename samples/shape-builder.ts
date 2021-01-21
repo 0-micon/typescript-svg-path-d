@@ -67,14 +67,14 @@ export class ShapeBuilder extends PathBuilder {
     return this;
   }
 
-  sun(pointCount = 3, radius1 = 0.5, radius2 = 1, shiftAngle = 0): this {
+  sun(pointCount = 3, radius1 = 0.5, radius2 = 1, shiftAngle = 0, sectorAngle = 2 * Math.PI): this {
     const radiusM = (radius1 + radius2) / 2;
     const cx = this.lastX;
     const cy = this.lastY + radius2;
 
     for (let i = 0; i < pointCount; i++) {
-      const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-      const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
+      const angle1 = (i + 0.5) * sectorAngle / pointCount;
+      const angle2 = (i + 1) * sectorAngle / pointCount;
 
       this
         .Q(
