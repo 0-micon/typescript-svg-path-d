@@ -34,7 +34,7 @@ export function createConvexPolygon(
     .polygon(pointCount, radius)
     .z()
     .m(0, radius / 5)
-    .polygon(pointCount, 4 * radius / 5, -Math.PI)
+    .polygon(pointCount, (4 * radius) / 5, -2 * Math.PI)
     .z().path;
 }
 
@@ -43,11 +43,12 @@ export function createStar(
   centerY: number,
   pointCount: number,
   rMin: number,
-  rMax: number
+  rMax: number,
+  sectorAngle = 2 * Math.PI
 ): SPD.PathNode[] {
   return new ShapeBuilder()
     .M(centerX, centerY - rMax)
-    .star(pointCount, rMin, rMax)
+    .star(pointCount, rMin, rMax, sectorAngle)
     .z().path;
 }
 

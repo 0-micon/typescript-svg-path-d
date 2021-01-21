@@ -20,11 +20,11 @@ export class ShapeBuilder extends PathBuilder {
       .a(radius, radius, 0, 0, sweep, 0, -2 * radius);
   }
 
-  polygon(pointCount = 3, radius = 1, deltaAngle = Math.PI): this {
+  polygon(pointCount = 3, radius = 1, sectorAngle = 2 * Math.PI): this {
     const cx = this.lastX;
     const cy = this.lastY + radius;
     for (let i = 0; i < pointCount; i++) {
-      const angle = (2 * (i + 1) * deltaAngle) / pointCount;
+      const angle = (i + 1) * sectorAngle / pointCount;
       this.L(
         cx + radius * Math.sin(angle),
         cy - radius * Math.cos(angle)
@@ -50,12 +50,12 @@ export class ShapeBuilder extends PathBuilder {
       .circle(radius1, !anticlockwise);
   }
 
-  star(pointCount = 3, radius1 = 0.5, radius2 = 1): this {
+  star(pointCount = 3, radius1 = 0.5, radius2 = 1, sectorAngle = 2 * Math.PI): this {
     const cx = this.lastX;
     const cy = this.lastY + radius2;
     for (let i = 0; i < pointCount; i++) {
-      const angle1 = ((1 + 2 * i) * Math.PI) / pointCount;
-      const angle2 = (2 * (i + 1) * Math.PI) / pointCount;
+      const angle1 = (i + 0.5) * sectorAngle / pointCount;
+      const angle2 = (i + 1) * sectorAngle / pointCount;
       this
         .L(
           cx + radius1 * Math.sin(angle1),
