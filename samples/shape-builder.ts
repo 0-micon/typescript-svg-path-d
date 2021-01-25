@@ -1,14 +1,6 @@
-import { getX, getY, PathBuilder, PathNode } from "svg-path-d";
+import { PathBuilder, PathNode } from "svg-path-d";
 
 export class ShapeBuilder extends PathBuilder {
-  get lastX() {
-    return getX(this.last);
-  }
-
-  get lastY() {
-    return getY(this.last);
-  }
-
   constructor(path: PathNode[] = []) {
     super(path);
   }
